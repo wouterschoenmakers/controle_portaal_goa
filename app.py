@@ -45,7 +45,7 @@ if isinstance(gisib,gpd.GeoDataFrame) and isinstance(pakket,gpd.GeoDataFrame):
                                 right_df = pakket,
                                 how = "inner")
     guid_check = set(result.Guid_left).intersection(result.Guid_right)
-    st.write(f"Er zijn {len(guid_check}}, die overeenkomen")
+    st.write(f"Er zijn {len(guid_check)}, die overeenkomen")
     if len(guid_check) == len(pakket):
         guids_correct = True
         st.write("Guids ✅")
