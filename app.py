@@ -1,5 +1,6 @@
 import streamlit as st
 import geopandas as gpd
+import pandas as pd
 import numpy as np
 import time
 from utils import process_geometries
@@ -38,6 +39,7 @@ types = False
 
 relevant_cols_left = [col+"_left" for col in relevant_cols]
 relevant_cols_right = [col +"_right" for col in relevant_cols]
+results = {}
 if isinstance(gisib,gpd.GeoDataFrame) and isinstance(pakket,gpd.GeoDataFrame):
     st.success("Beide bestanden zijn goed ingeladen! Lekker bezig Bilal 💯")
 
@@ -45,22 +47,27 @@ if isinstance(gisib,gpd.GeoDataFrame) and isinstance(pakket,gpd.GeoDataFrame):
                                 right_df = pakket,
                                 how = "inner")
     guid_check = set(result.Guid_left).intersection(result.Guid_right)
-    st.write(f"Er zijn {len(guid_check)}, die overeenkomen")
+    # st.write(f"Er zijn {len(guid_check)}, die overeenkomen")
     if len(guid_check) == len(pakket):
         guids_correct = True
         st.write("Guids ✅")
     check_result = result.loc[lambda df: ((df.overlap_percentage > 99.9) & (df.oppervlak_percentage > 99.9))]
-    st.write(f"Er zijn {check_result.shape[0]} vlakken die een overlap en oppervlak percentage > 99.9 hebben")
+    # st.write(f"Er zijn {check_result.shape[0]} vlakken die een overlap en oppervlak percentage > 99.9 hebben")
+    results["Guid matches"] = len(guid_check)
+    results["Geometry matches"] = check_result.shape[0]
     if len(check_result) == len(pakket):
         geometry = True
         st.write()
         st.write("Geometry ✅")
     types_check = (check_result.loc[:,relevant_cols_left].fillna(0).values == check_result.loc[:,relevant_cols_right].fillna(0).values).all(axis=1).sum()
-    st.write(f"Er zijn {types_check} matches op Guid, Type, Type gedetailleerd en Type extra gedetailleerd")
+    # st.write(f"Er zijn {types_check} matches op Guid, Type, Type gedetailleerd en Type extra gedetailleerd")
+    results["Types matches"] = types_check
     if types_check == len(pakket):
         types = True
         st.write("Types ✅")
-
+    results_table = pd.DataFrame(data=result)
+    st.write("Het aantal matches per check")
+    st.table(results_table)
     if guids_correct:
         if geometry:
             if types:
