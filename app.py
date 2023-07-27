@@ -53,7 +53,7 @@ if isinstance(gisib,gpd.GeoDataFrame) and isinstance(pakket,gpd.GeoDataFrame):
         st.write("Guids ✅")
     check_result = result.loc[lambda df: ((df.overlap_percentage > 99.9) & (df.oppervlak_percentage > 99.9))]
     # st.write(f"Er zijn {check_result.shape[0]} vlakken die een overlap en oppervlak percentage > 99.9 hebben")
-    results["Guid matches"] = len(guid_check)
+    results["Guid matches"] = str(len(guid_check))
     results["Geometry matches"] = check_result.shape[0]
     if len(check_result) == len(pakket):
         geometry = True
@@ -68,6 +68,8 @@ if isinstance(gisib,gpd.GeoDataFrame) and isinstance(pakket,gpd.GeoDataFrame):
     results_table = pd.DataFrame(data=results,index=["Aantal matches"])
     st.write("Het aantal matches per check")
     st.table(results_table)
+    pd.options.display.float_format = '%'.format
+    st.table((results_table / len(pakket) * 100))
     if guids_correct:
         if geometry:
             if types:
