@@ -5,7 +5,7 @@ import time
 from utils import process_geometries
 
 st.header("Welkom Bilal!👋")
-st.subheader("controleer hier de resultaten van de uploads")
+st.subheader("Controleer hier de resultaten van de uploads")
 st.markdown("In dit portaal wordt een vergelijking gemaakt of het upgeloade pakket terug te vinden is in gisib")
 
 gisib_col, pakket_col = st.columns((1,1))
@@ -45,14 +45,18 @@ if isinstance(gisib,gpd.GeoDataFrame) and isinstance(pakket,gpd.GeoDataFrame):
                                 right_df = pakket,
                                 how = "inner")
     guid_check = set(result.Guid_left).intersection(result.Guid_right)
+    st.write(f"Er zijn {len(guid_check}}, die overeenkomen")
     if len(guid_check) == len(pakket):
         guids_correct = True
         st.write("Guids ✅")
     check_result = result.loc[lambda df: ((df.overlap_percentage > 99.9) & (df.oppervlak_percentage > 99.9))]
+    st.write(f"Er zijn {check_result.shape[0]} vlakken die een overlap en oppervlak percentage > 99.9 hebben")
     if len(check_result) == len(pakket):
         geometry = True
+        st.write()
         st.write("Geometry ✅")
     types_check = (check_result.loc[:,relevant_cols_left].fillna(0).values == check_result.loc[:,relevant_cols_right].fillna(0).values).all(axis=1).sum()
+    st.write(f"Er zijn {types_check} matches op Guid, Type, Type gedetailleerd en Type extra gedetailleerd")
     if types_check == len(pakket):
         types = True
         st.write("Types ✅")
