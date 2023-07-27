@@ -68,7 +68,7 @@ if isinstance(gisib,gpd.GeoDataFrame) and isinstance(pakket,gpd.GeoDataFrame):
     results_table = pd.DataFrame(data=results,index=["Aantal matches"])
     st.write("Het aantal matches per check")
     st.table(results_table)
-    pd.options.display.float_format = '{:.2f%}'.format
+    pd.options.display.float_format = '{:.2%}'.format
     st.table((results_table / len(pakket) * 100))
     if guids_correct:
         if geometry:
