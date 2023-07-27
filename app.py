@@ -65,7 +65,7 @@ if isinstance(gisib,gpd.GeoDataFrame) and isinstance(pakket,gpd.GeoDataFrame):
     if types_check == len(pakket):
         types = True
         st.write("Types ✅")
-    results_table = pd.DataFrame(data=results,index=[0])
+    results_table = pd.DataFrame(data=results,index=["Aantal matches"])
     st.write("Het aantal matches per check")
     st.table(results_table)
     if guids_correct:
