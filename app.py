@@ -27,7 +27,7 @@ def load_file(filepath : str,fields : list):
 
 if st.button("Run"):
     if upload_gisib:
-        gisib = load_file(filepath=upload_gisib,fields = relevant_cols_left)
+        gisib = load_file(filepath=upload_gisib,fields = relevant_cols1)
         st.write(f"De gisib file heeft {gisib.shape[0]} rijen")
 
     if upload_pakket:
