@@ -19,8 +19,8 @@ pakket = None
 
 relevant_cols1 = ["Guid","Type","Type_gedetailleerd","Type_extra_gedetailleerd"]
 relevant_cols2 = ["Guid","Type","Type gedetailleerd","Type extra gedetailleerd"]
-relevant_cols_left = ["Guid_left","Type_left","Type_extra_gedetailleerd"]
-relevant_cols_right = ["Guid_right","Type_right","Type extra gedetailleerd"]
+relevant_cols_left = ["Guid_left","Type_left","Type_gedetailleerd","Type_extra_gedetailleerd"]
+relevant_cols_right = ["Guid_right","Type_right","Type gedetailleerd","Type extra gedetailleerd"]
 @st.cache_data
 def load_file(filepath : str,fields : list):
     return gpd.read_file(filename=filepath, include_fields=fields,engine="fiona")
@@ -65,6 +65,9 @@ if isinstance(gisib,gpd.GeoDataFrame) and isinstance(pakket,gpd.GeoDataFrame):
     if types_check == len(pakket):
         types = True
         st.write("Types ✅")
+
+    st.write("left",check_result.loc[:,"Type_gedetailleerd"].value_counts())
+    st.write("right", check_result.loc[:, "Type gedetailleerd"].value_counts())
     results_table = pd.DataFrame(data=results,index=["Aantal matches"])
     st.write("Het aantal matches per check")
     st.table(results_table)
