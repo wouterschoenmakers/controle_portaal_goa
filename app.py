@@ -19,8 +19,8 @@ pakket = None
 
 relevant_cols1 = ["Guid","Type","Type_gedetailleerd","Type_extra_gedetailleerd"]
 relevant_cols2 = ["Guid","Type","Type gedetailleerd","Type extra gedetailleerd"]
-relevant_cols_left = ["Guid_left","Type_left","Type_gedetailleerd","Type_extra_gedetailleerd"]
-relevant_cols_right = ["Guid_right","Type_right","Type gedetailleerd","Type extra gedetailleerd"]
+relevant_cols_left = ["Guid_left","Type_left","Type_gedetailleerd"]
+relevant_cols_right = ["Guid_right","Type_right","Type gedetailleerd"]
 @st.cache_data
 def load_file(filepath : str,fields : list):
     return gpd.read_file(filename=filepath, include_fields=fields,engine="fiona")
