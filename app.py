@@ -53,6 +53,7 @@ if isinstance(gisib,gpd.GeoDataFrame) and isinstance(pakket,gpd.GeoDataFrame):
         guids_correct = True
         st.write("Guids ✅")
     check_result = result.loc[lambda df: ((df.overlap_percentage > 99.9) & (df.oppervlak_percentage > 99.9))]
+    st.write(result.loc[lambda df: ~((df.overlap_percentage > 99.9) & (df.oppervlak_percentage > 99.9)),["Guid_right","overlap_percentage","oppervlak_percentage"]])
     # st.write(f"Er zijn {check_result.shape[0]} vlakken die een overlap en oppervlak percentage > 99.9 hebben")
     results["Guid matches"] = len(guid_check)
     results["Geometry matches"] = check_result.shape[0]
