@@ -17,28 +17,28 @@ upload_pakket = pakket_col.file_uploader(label = "Upload hier het pakket",
 gisib = None
 pakket = None
 
-
-relevant_cols = ["Guid","Type","Type gedetailleerd","Type extra gedetailleerd"]
+relevant_cols1 = ["Guid","Type","Type_gedetailleerd","Type_extra_gedetailleerd"]
+relevant_cols2 = ["Guid","Type","Type gedetailleerd","Type extra gedetailleerd"]
+relevant_cols_left = ["Guid_left","Type_left","Type_gedetailleerd","Type_extra_gedetailleerd"]
+relevant_cols_right = ["Guid_right","Type_right","Type gedetailleerd","Type extra gedetailleerd"]
 @st.cache_data
-def load_file(filepath : str):
-    return gpd.read_file(filename=filepath, include_fields=relevant_cols,engine="fiona")
+def load_file(filepath : str,fields : list):
+    return gpd.read_file(filename=filepath, include_fields=fields,engine="fiona")
 
 if st.button("Run"):
     if upload_gisib:
-        gisib = load_file(filepath=upload_gisib)
+        gisib = load_file(filepath=upload_gisib,fields = relevant_cols_left)
         st.write(f"De gisib file heeft {gisib.shape[0]} rijen")
 
     if upload_pakket:
 
-        pakket = load_file(filepath=upload_pakket)
+        pakket = load_file(filepath=upload_pakket,fields = relevant_cols2)
         st.write(f"Het verwerkingspakket heeft {pakket.shape[0]} rijen")
 
 guids_correct = False
 geometry = False
 types = False
 
-relevant_cols_left = ["Guid_left","Type_left"] + [col.replace(" ","_") for col in relevant_cols[2:]]
-relevant_cols_right = ["Guid_right","Type_right"] + [col for col in relevant_cols[2:]]
 results = {}
 if isinstance(gisib,gpd.GeoDataFrame) and isinstance(pakket,gpd.GeoDataFrame):
     st.success("Beide bestanden zijn goed ingeladen! Lekker bezig Bilal 💯")
