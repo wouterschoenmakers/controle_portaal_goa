@@ -68,14 +68,17 @@ if isinstance(gisib,gpd.GeoDataFrame) and isinstance(pakket,gpd.GeoDataFrame):
     with st.expander("Check typeringen:"):
         t0, t1, t2 = st.tabs(["Type","Type gedetailleerd","Type extra gedetailleerd"])
         with t0:
-            st.write("left", check_result.loc[:, "Type_left"].value_counts())
-            st.write("right", check_result.loc[:, "Type_right"].value_counts())
+            col1, col2 = st.columns((1,1))
+            col1.write("left", check_result.loc[:, "Type_left"].value_counts())
+            col2.write("right", check_result.loc[:, "Type_right"].value_counts())
         with t1:
-            st.write("left",check_result.loc[:,"Type_gedetailleerd"].value_counts())
-            st.write("right", check_result.loc[:, "Type gedetailleerd"].value_counts())
+            col1, col2 = st.columns((1, 1))
+            col1.write("left",check_result.loc[:,"Type_gedetailleerd"].value_counts())
+            col2.write("right", check_result.loc[:, "Type gedetailleerd"].value_counts())
         with t2:
-            st.write("left",check_result.loc[:,"Type_extra_gedetailleerd"].value_counts())
-            st.write("right", check_result.loc[:, "Type gedetailleerd"].value_counts())
+            col1, col2 = st.columns((1, 1))
+            col1.write("left",check_result.loc[:,"Type_extra_gedetailleerd"].value_counts())
+            col2.write("right", check_result.loc[:, "Type gedetailleerd"].value_counts())
     results_table = pd.DataFrame(data=results,index=["Aantal matches"])
     st.write("Het aantal matches per check")
     st.table(results_table)
