@@ -55,7 +55,7 @@ if isinstance(gisib,gpd.GeoDataFrame) and isinstance(pakket,gpd.GeoDataFrame):
     check_result = result.loc[lambda df: ((df.overlap_percentage > 99.9) & (df.oppervlak_percentage > 99.9))]
     st.write("Dit is de Guid die wel in het pakket voorkomt maar niet een 100% match heeft")
     st.write(set(pakket.Guid) - set(check_result.Guid_right))
-    st.write(check_result.loc[lambda df: df.Guid_right.isin(list(set(pakket.Guid) - set(check_result.Guid_right))),["overlap_percentage","oppervlak_percentage"]])
+    st.table(check_result.loc[lambda df: df.Guid_right.isin(list(set(pakket.Guid) - set(check_result.Guid_right)))].T)
 
     results["Guid matches"] = len(guid_check)
     results["Geometry matches"] = check_result.shape[0]
