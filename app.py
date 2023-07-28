@@ -37,8 +37,8 @@ guids_correct = False
 geometry = False
 types = False
 
-relevant_cols_left = [col.replace(" ","_") +"_left" for col in relevant_cols]
-relevant_cols_right = [col +"_right" for col in relevant_cols]
+relevant_cols_left = ["Guid_left","Type_left"] + [col.replace(" ","_") for col in relevant_cols[2:]]
+relevant_cols_right = ["Guid_right","Type_right"] + [col for col in relevant_cols[2:]]
 results = {}
 if isinstance(gisib,gpd.GeoDataFrame) and isinstance(pakket,gpd.GeoDataFrame):
     st.success("Beide bestanden zijn goed ingeladen! Lekker bezig Bilal 💯")
