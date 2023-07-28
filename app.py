@@ -37,7 +37,7 @@ guids_correct = False
 geometry = False
 types = False
 
-relevant_cols_left = [col+"_left" for col in relevant_cols]
+relevant_cols_left = [col.replace(" ","_") +"_left" for col in relevant_cols]
 relevant_cols_right = [col +"_right" for col in relevant_cols]
 results = {}
 if isinstance(gisib,gpd.GeoDataFrame) and isinstance(pakket,gpd.GeoDataFrame):
